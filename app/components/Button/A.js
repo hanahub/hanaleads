@@ -1,9 +1,7 @@
-import styled from 'styled-components';
+import NormalA from 'components/A';
 
-import buttonStyles from './buttonStyles';
-
-const A = styled.a`
-  ${buttonStyles};
+const A = NormalA.extend`
+  padding: 2em 0;
 `;
 
 export default A;

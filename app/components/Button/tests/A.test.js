@@ -1,27 +1,29 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
+import renderer from 'react-test-renderer';
+import 'jest-styled-components';
 
 import A from '../A';
 
 describe('<A />', () => {
-  it('should render an <a> tag', () => {
-    const renderedComponent = shallow(<A />);
-    expect(renderedComponent.type()).toEqual('a');
+  it('should match the snapshot', () => {
+    const renderedComponent = renderer.create(<A />).toJSON();
+    expect(renderedComponent).toMatchSnapshot();
   });
 
   it('should have a className attribute', () => {
-    const renderedComponent = shallow(<A />);
-    expect(renderedComponent.prop('className')).toBeDefined();
+    const renderedComponent = mount(<A />);
+    expect(renderedComponent.find('a').prop('className')).toBeDefined();
   });
 
   it('should adopt a valid attribute', () => {
     const id = 'test';
-    const renderedComponent = shallow(<A id={id} />);
-    expect(renderedComponent.prop('id')).toEqual(id);
+    const renderedComponent = mount(<A id={id} />);
+    expect(renderedComponent.find('a').prop('id')).toEqual(id);
   });
 
   it('should not adopt an invalid attribute', () => {
-    const renderedComponent = shallow(<A attribute="test" />);
-    expect(renderedComponent.prop('attribute')).toBeUndefined();
+    const renderedComponent = mount(<A attribute="test" />);
+    expect(renderedComponent.find('a').prop('attribute')).toBeUndefined();
   });
 });
